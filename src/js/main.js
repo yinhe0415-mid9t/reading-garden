@@ -7,10 +7,6 @@ const RENDER = { garden: renderGarden, seasons: renderSeasons, leaves: renderLea
 var rendered = {};
 
 document.addEventListener("DOMContentLoaded", () => {
-  var now = new Date();
-  document.getElementById("header-date").textContent =
-    now.toLocaleDateString("zh-CN", { year: "numeric", month: "long", day: "numeric", weekday: "long" });
-
   renderGarden();
   rendered.garden = true;
 
