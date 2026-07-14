@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Reading Garden</title>
+  <link rel="stylesheet" href="src/styles/kindle.css" />
+  <script type="module" src="src/js/main.js"></script>
+</head>
+<body>
+  <div class="wrapper">
+
+    <header class="header">
+      <svg class="header-fern" viewBox="0 0 24 16" fill="none" stroke="#ccc" stroke-width="0.7" stroke-linecap="round">
+        <path d="M2 14 Q6 10 12 6 Q18 2 22 2"/>
+        <path d="M5 12 Q4 7 9 8"/>
+        <path d="M10 8 Q9 3 14 4"/>
+        <path d="M15 6 Q14 2 18 3"/>
+      </svg>
+    </header>
+
+    <main class="main">
+      <div id="view-garden" class="view view--active"></div>
+      <div id="view-seasons" class="view"></div>
+      <div id="view-leaves" class="view"></div>
+    </main>
+
+    <nav class="nav">
+      <ul class="nav-list">
+        <li>
+          <button class="nav-link nav-link--active" data-view="garden">
+            <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M10 18V8"/>
+              <path d="M10 8c-3 0-5 3-5 5s2 5 5 3"/>
+              <path d="M10 8c3 0 5 3 5 5s-2 5-5 3"/>
+            </svg>
+            <span>Garden</span>
+          </button>
+        </li>
+        <li>
+          <button class="nav-link" data-view="seasons">
+            <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="10" cy="10" r="8"/>
+              <circle cx="10" cy="10" r="5"/>
+              <circle cx="10" cy="10" r="2"/>
+            </svg>
+            <span>Seasons</span>
+          </button>
+        </li>
+        <li>
+          <button class="nav-link" data-view="leaves">
+            <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M10 18V8"/>
+              <path d="M10 8c-4-1-7 2-7 5s3 5 7 3"/>
+              <path d="M10 8c4-1 7 2 7 5s-3 5-7 3"/>
+            </svg>
+            <span>Leaves</span>
+          </button>
+        </li>
+      </ul>
+    </nav>
+
+  </div>
+</body>
+</html>
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
