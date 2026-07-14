@@ -1,0 +1,503 @@
+/* ================================================
+   Reading Garden — Botanical Edition
+   Design: 19th C. herbarium, fern ink drawings, paper
+   ================================================ */
+
+/* --- Paper Texture --- */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { font-size: 17px; }
+
+body {
+  font-family: Georgia, "Times New Roman", "Noto Serif SC", serif;
+  color: #1a1a1a;
+  background: #F3EFE4;
+  line-height: 1.8;
+  -webkit-font-smoothing: antialiased;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9999;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.006'/%3E%3C/svg%3E");
+  background-size: 200px 200px;
+}
+
+a { color: inherit; text-decoration: none; }
+
+/* --- Layout --- */
+.wrapper {
+  max-width: 580px;
+  margin: 0 auto;
+  padding: 0 28px;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.main { flex: 1; padding: 24px 0; }
+
+.view { display: none; }
+.view--active { display: block; }
+
+/* --- Header (Herbarium Label Style) --- */
+.header {
+  padding: 20px 0 16px;
+  text-align: center;
+  border-bottom: 1px solid #eee;
+}
+
+.brand {
+  font-family: Georgia, serif;
+  font-size: 0.75rem;
+  font-weight: normal;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: #666;
+}
+
+.tagline {
+  font-family: Georgia, serif;
+  font-size: 0.8rem;
+  font-style: italic;
+  color: #999;
+  margin-top: 4px;
+}
+
+.header-ornament {
+  display: block;
+  width: 48px;
+  height: 10px;
+  margin: 8px auto 0;
+}
+
+.header-fern {
+  display: block;
+  width: 20px;
+  height: auto;
+  margin: 0 auto;
+}
+
+.header-date {
+  font-family: Georgia, serif;
+  font-size: 0.65rem;
+  color: #999;
+  margin-top: 8px;
+}
+
+/* --- Botanical Section Divider --- */
+.fern-divider {
+  display: block;
+  width: 80px;
+  height: 20px;
+  margin: 36px auto;
+}
+
+/* --- Section (Specimen Label Style) --- */
+.specimen-label {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.specimen-label svg {
+  display: block;
+  margin: 0 auto 8px;
+}
+
+.specimen-label .title {
+  font-family: Georgia, serif;
+  font-size: 0.6rem;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: #888;
+}
+
+.specimen-label .subtitle {
+  font-family: Georgia, serif;
+  font-size: 0.72rem;
+  font-style: italic;
+  color: #aaa;
+  margin-top: 2px;
+}
+
+.inner-divider {
+  border: none;
+  border-top: 1px solid #E0DCD0;
+  margin: 24px 0;
+}
+
+/* ========== GARDEN PAGE ========== */
+
+.seed-icon {
+  display: block;
+  margin: 0 auto 16px;
+}
+
+.event-date {
+  text-align: center;
+  font-family: Georgia, serif;
+  font-size: 0.85rem;
+  font-weight: normal;
+  letter-spacing: 1px;
+  color: #888;
+  margin-bottom: 8px;
+}
+
+.event-body {
+  text-align: center;
+  font-size: 0.85rem;
+  line-height: 1.7;
+  color: #333;
+  max-width: 480px;
+  margin: 0 auto;
+}
+
+.event-year { font-weight: 700; color: #111; }
+
+.event-keywords {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 14px;
+}
+
+.event-keyword {
+  font-family: Georgia, serif;
+  font-size: 0.6rem;
+  letter-spacing: 0.5px;
+  color: #999;
+}
+
+.event-keyword::before { content: "#"; color: #ccc; }
+
+/* ========== SEASONS PAGE ========== */
+
+.session-area {
+  text-align: center;
+  margin-bottom: 28px;
+}
+
+.session-start {
+  font-family: Georgia, serif;
+  font-size: 0.7rem;
+  color: #999;
+  margin-bottom: 4px;
+}
+
+.session-elapsed {
+  font-family: Georgia, serif;
+  font-size: 1.4rem;
+  font-weight: normal;
+  color: #111;
+  margin-bottom: 8px;
+  letter-spacing: 0.5px;
+}
+
+.session-action {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  font-family: Georgia, serif;
+  font-size: 0.95rem;
+  font-style: italic;
+  color: #888;
+}
+
+.session-action:hover { color: #111; }
+
+.session-icon {
+  width: 32px;
+  height: 32px;
+  stroke: currentColor;
+  flex-shrink: 0;
+}
+
+.session-today {
+  font-family: Georgia, serif;
+  font-size: 0.65rem;
+  color: #aaa;
+  margin-top: 12px;
+}
+
+.stats-bloom {
+  text-align: center;
+  margin-bottom: 28px;
+}
+
+.stats-bloom .bloom-count {
+  font-family: Georgia, serif;
+  font-size: 2rem;
+  font-weight: normal;
+  color: #111;
+  line-height: 1.1;
+}
+
+.stats-bloom .bloom-label {
+  font-family: Georgia, serif;
+  font-size: 0.6rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: #999;
+  margin-top: 4px;
+}
+
+.stats-reading {
+  font-family: Georgia, serif;
+  font-size: 0.8rem;
+  font-style: italic;
+  color: #888;
+  text-align: center;
+  margin-bottom: 28px;
+}
+
+.chart-section { margin-bottom: 28px; }
+
+.chart-heading {
+  font-family: Georgia, serif;
+  font-size: 0.55rem;
+  font-weight: normal;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: #999;
+  margin-bottom: 12px;
+  text-align: center;
+}
+
+.chart-svg { width: 100%; height: auto; display: block; }
+
+.chart-label {
+  font-family: Georgia, serif;
+  font-size: 0.5rem;
+  fill: #999;
+}
+
+.chart-line {
+  fill: none;
+  stroke: #111;
+  stroke-width: 1.5;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+}
+
+.chart-dot { fill: #111; }
+.chart-grid { stroke: #E0DCD0; stroke-width: 1; }
+
+.chart-avg-line {
+  stroke: #ccc;
+  stroke-width: 1;
+  stroke-dasharray: 3 3;
+}
+
+.chart-avg-label {
+  font-family: Georgia, serif;
+  font-size: 0.45rem;
+  fill: #bbb;
+}
+
+.chart-val {
+  font-family: Georgia, serif;
+  font-size: 0.45rem;
+  fill: #888;
+  text-anchor: middle;
+}
+
+/* ========== LEAVES PAGE ========== */
+
+.leaf-title {
+  font-family: Georgia, serif;
+  font-size: 1.2rem;
+  font-weight: normal;
+  color: #111;
+  text-align: center;
+  margin-bottom: 2px;
+}
+
+.leaf-subtitle {
+  font-family: Georgia, serif;
+  font-size: 0.8rem;
+  font-style: italic;
+  color: #888;
+  text-align: center;
+  margin-bottom: 14px;
+}
+
+.leaf-body {
+  font-size: 0.82rem;
+  line-height: 1.7;
+  color: #333;
+  text-align: center;
+  max-width: 460px;
+  margin: 0 auto;
+}
+
+.leaf-rec {
+  font-size: 0.78rem;
+  font-style: italic;
+  color: #888;
+  text-align: center;
+  margin-top: 12px;
+}
+
+.leaf-tags {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.leaf-tag {
+  font-family: Georgia, serif;
+  font-size: 0.58rem;
+  color: #999;
+}
+
+.leaf-tag::before { content: "#"; color: #ccc; }
+
+.article-source {
+  font-family: Georgia, serif;
+  font-size: 0.6rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: #888;
+  text-align: center;
+  margin-bottom: 4px;
+}
+
+.article-title {
+  font-size: 0.9rem;
+  font-weight: 600;
+  line-height: 1.5;
+  color: #111;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+/* ========== GROWTH RINGS ========== */
+
+.rings-icon {
+  width: 20px;
+  height: 20px;
+  stroke: #888;
+  stroke-width: 1;
+  fill: none;
+}
+
+/* ========== BOTTOM NAV ========== */
+
+.nav {
+  border-top: 1px solid #ccc;
+  padding: 18px 0 28px;
+}
+
+.nav-list {
+  list-style: none;
+  display: flex;
+  justify-content: center;
+  gap: 48px;
+}
+
+.nav-link {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  font-family: Georgia, serif;
+  font-size: 0.55rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: #bbb;
+  cursor: pointer;
+  background: none;
+  border: none;
+  padding: 0;
+  position: relative;
+}
+
+.nav-link svg {
+  width: 16px;
+  height: 16px;
+  stroke: #bbb;
+}
+
+.nav-link:hover { color: #888; }
+.nav-link:hover svg { stroke: #888; }
+.nav-link--active { color: #111; }
+.nav-link--active svg { stroke: #111; }
+
+.nav-link--active::after {
+  content: "";
+  position: absolute;
+  bottom: -4px;
+  width: 12px;
+  height: 1px;
+  background: #111;
+}
+
+/* ========== RESPONSIVE ========== */
+
+@media (max-width: 480px) {
+  .wrapper { padding: 0 20px; }
+  .header { padding: 28px 0 20px; }
+  .main { padding: 20px 0; }
+  .nav-list { gap: 32px; }
+  html { font-size: 16px; }
+}
+
+@media (min-width: 900px) {
+  html { font-size: 18px; }
+  .wrapper { padding: 0 32px; }
+}
+
+/* ========== Reading Calendar ========== */
+
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 2px;
+  margin: 0 auto 24px;
+  max-width: 340px;
+}
+
+.cal-hdr {
+  text-align: center;
+  font-family: Georgia, serif;
+  font-size: 0.55rem;
+  color: #bbb;
+  padding: 4px 0;
+}
+
+.cal-cell {
+  text-align: center;
+  padding: 4px 2px;
+  min-height: 34px;
+}
+
+.cal-day {
+  display: block;
+  font-family: Georgia, serif;
+  font-size: 0.7rem;
+  color: #555;
+  margin-bottom: 2px;
+}
+
+.calendar-fern {
+  display: block;
+  width: 16px;
+  height: auto;
+  margin: 0 auto;
+}
+
+.calendar-stats {
+  text-align: center;
+  font-family: Georgia, serif;
+  font-size: 0.65rem;
+  color: #888;
+  margin-bottom: 28px;
+  letter-spacing: 0.3px;
+}
