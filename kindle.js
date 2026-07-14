@@ -604,7 +604,19 @@ function setupSession(){
   var startBtn=document.getElementById("btn-start-session");
   var endBtn=document.getElementById("btn-end-session");
   var doneBtn=document.getElementById("btn-done-session");
-  if(startBtn)startBtn.addEventListener("click",function(){setActive({start:new Date().toISOString()});renderSeasons();});
+  if(startBtn)startBtn.addEventListener("click",function(){
+    // A: button text changes immediately
+    startBtn.textContent="Growing···";
+    // B: fade out
+    document.getElementById("view-seasons").classList.add("view--fading");
+    setTimeout(function(){
+      setActive({start:new Date().toISOString()});
+      renderSeasons();
+      setTimeout(function(){
+        document.getElementById("view-seasons").classList.remove("view--fading");
+      },50);
+    },400);
+  });
   if(endBtn)endBtn.addEventListener("click",function(){
     var act=getActive();if(!act)return;
     var start=new Date(act.start);var end=new Date();
@@ -623,16 +635,15 @@ function setupSession(){
 
 
 
-
 var RENDER = { garden: renderGarden, seasons: renderSeasons, leaves: renderLeaves };
 var rendered = {};
 
-document.addEventListenerfunction("DOMContentLoaded", () {
-  
+document.addEventListener("DOMContentLoaded", function() {
+
   renderGarden();
   rendered.garden = true;
 
-  initRouterfunction((v) {
+  initRouter(function(v) {
     if (!rendered[v]) {
       var fn = RENDER[v];
       if (fn) fn();
